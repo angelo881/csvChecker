@@ -80,12 +80,12 @@ public class ValidatorSourceManager {
 		RowResult result = new RowResult(id, number);
 		if (!validateNumber(number)) {
 			result.setNumberResult(PhoneNumberResult.NOT_VALID);
-			if (number.length() == LENGTH) {
-				String oldNumber = number;
-				number = PREFIX + number.substring(3);
-				if (validateNumber(number)) {
-					result.setNote(new StringBuffer().append("number ").append(oldNumber).append("corrected in ")
-							.append(number).toString());
+			if (number.length() >= LENGTH) {
+				String new_number = PREFIX + number.substring(PREFIX.length(),LENGTH);
+				if (validateNumber(new_number)) {
+					result.setNumber(new_number);
+					result.setNote(new StringBuffer().append("number ").append(number).append("corrected in ")
+							.append(new_number).toString());
 					result.setNumberResult(PhoneNumberResult.CORRECTED);
 				}
 			}

@@ -41,11 +41,15 @@ public class ValidatorSourceManagerTest {
 	}
 
 	@Test
-	public void testValidateInvalid() throws Exception {
-		assertEquals(PhoneNumberResult.NOT_VALID, manager.validate("test", "3843123456709554398").getNumberResult());
+	public void testValidateCorrected2() throws Exception {
+		assertEquals(PhoneNumberResult.CORRECTED, manager.validate("test", "3843123456709554398").getNumberResult());
 
 	}
+	@Test
+	public void testValidateInvalid() throws Exception {
+		assertEquals(PhoneNumberResult.NOT_VALID, manager.validate("test", "dsa").getNumberResult());
 
+	}
 	@Test
 	public void validFile() throws Exception {
 		File file = new File("src/test/resources/source.csv");
@@ -56,9 +60,9 @@ public class ValidatorSourceManagerTest {
 		assertEquals(7, res.size());
 		assertEquals(1, res.stream().filter(t -> t.getNumberResult().equals(PhoneNumberResult.VALID))
 				.collect(Collectors.toList()).size());
-		assertEquals(2, res.stream().filter(t -> t.getNumberResult().equals(PhoneNumberResult.CORRECTED))
+		assertEquals(4, res.stream().filter(t -> t.getNumberResult().equals(PhoneNumberResult.CORRECTED))
 				.collect(Collectors.toList()).size());
-		assertEquals(4, res.stream().filter(t -> t.getNumberResult().equals(PhoneNumberResult.NOT_VALID))
+		assertEquals(2, res.stream().filter(t -> t.getNumberResult().equals(PhoneNumberResult.NOT_VALID))
 				.collect(Collectors.toList()).size());
 	}
 }
