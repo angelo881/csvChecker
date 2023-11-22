@@ -19,17 +19,23 @@ import com.interlogica.business.ValidatorSourceManager;
 import com.interlogica.data.AfricanPhoneNumber;
 import com.interlogica.data.RowResult;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Parameter;
+
 @Controller
 public class ValidatorController {
 
 	@Autowired
 	private ValidatorSourceManager service;
 
+	@ApiOperation(value = "Valida il numero telefonico", notes = "Questo servizio valida il numero telefonico, uso esterno")
 	@PostMapping("/validateNumber")
-	public ResponseEntity<RowResult> validateNumber(@RequestParam String phone_number) {
+	public ResponseEntity<RowResult> validateNumber(@RequestParam @Parameter(name = "phone_number", description = "Numero da validare") String phone_number) {
 		return ResponseEntity.ok(service.validate(UUID.randomUUID().toString(), phone_number));
 	}
 
+	
+	@ApiOperation(value = "Form validazione numero telefonico", notes = "Questo servizio restituisce la form per inserimento numero telefonico")
 	@GetMapping("/")
 	public String showForm(Model model) {
 		AfricanPhoneNumber african_number = new AfricanPhoneNumber();
@@ -38,6 +44,7 @@ public class ValidatorController {
 		return "validation_form";
 	}
 
+	@ApiOperation(value = "Valida il numero telefonico", notes = "Questo servizio valida il numero telefonico, uso interno alla form")
 	@PostMapping("/validateNumberWeb")
 	public String validateNumberWeb(Model model, @ModelAttribute("african_number") AfricanPhoneNumber number) {
 		model.addAttribute("report", service.validate(UUID.randomUUID().toString(), number.getNumber()));
@@ -45,8 +52,9 @@ public class ValidatorController {
 		return "validation_report";
 	}
 
+	@ApiOperation(value = "Consuma il file csv", notes = "Questo servizio consente di importare un file .csv di numeri e restituisce un report in formato JSON")
 	@PostMapping("/consumeFile")
-	public ResponseEntity<List<RowResult>> consumeFile(@RequestParam("file") MultipartFile file) {
+	public ResponseEntity<List<RowResult>> consumeFile(@RequestParam("file") @Parameter(name = "file", description = "File da importare") MultipartFile file) {
 		List<RowResult> result = new ArrayList<>();
 		try {
 			result = service.loadFile(file);
