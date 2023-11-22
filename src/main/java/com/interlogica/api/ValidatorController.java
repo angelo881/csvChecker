@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +27,16 @@ import io.swagger.v3.oas.annotations.Parameter;
 @Controller
 public class ValidatorController {
 
+	
+	static Logger logger = LoggerFactory.getLogger(ValidatorController.class);
+
 	@Autowired
 	private ValidatorSourceManager service;
 
 	@ApiOperation(value = "Valida il numero telefonico", notes = "Questo servizio valida il numero telefonico, uso esterno")
 	@PostMapping("/validateNumber")
 	public ResponseEntity<RowResult> validateNumber(@RequestParam @Parameter(name = "phone_number", description = "Numero da validare") String phone_number) {
+		logger.info("ricevuta richiesta validazione numero {}", phone_number);
 		return ResponseEntity.ok(service.validate(UUID.randomUUID().toString(), phone_number));
 	}
 

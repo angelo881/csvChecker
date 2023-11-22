@@ -42,9 +42,12 @@ public class ValidatorSourceManager {
 		this.repo = repo;
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		this.validator = factory.getValidator();
+		logger.debug("inizializzato oggetto ValidatorSourceManager");
+
 	}
 
 	public List<RowResult> loadFile(MultipartFile file) throws IOException {
+		logger.info("parsing file...");
 		List<RowResult> result = new ArrayList<>();
 
 		List<String[]> rows = null;
@@ -75,12 +78,17 @@ public class ValidatorSourceManager {
 	}
 
 	public RowResult validate(String id, String number) {
+		logger.info("provo a validare il numero {}",number);
 		RowResult result = new RowResult(id, number);
 		if (!validateNumber(number)) {
+			logger.info("il numero {} non è valido, provo a correggerlo....",number);
+
 			result.setNumberResult(PhoneNumberResult.NOT_VALID);
 			if (number.length() >= LENGTH) {
 				String new_number = PREFIX + number.substring(PREFIX.length(),LENGTH);
 				if (validateNumber(new_number)) {
+					logger.debug("corretto numero {} in {}, numero valido!", number, new_number);
+
 					result.setNumber(new_number);
 					result.setNote(new StringBuffer().append("number ").append(number).append(" corrected in ")
 							.append(new_number).toString());
