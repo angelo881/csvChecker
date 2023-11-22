@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Validation Report</title>
+<style type="text/css">
+    span {
+        display: inline-block;
+        width: 200px;
+        text-align: left;
+    }
+</style>
+</head>
+<body>
+<div align="center">
+    <h2>Validation Report</h2>
+    <span>Number:</span><span th:text="${report.number}"></span><br/>
+    <span>Status:</span><span th:text="${report.numberResult}"></span><br/>
+    <span>Note:</span><span th:text="${report.note}"></span><br/>
+</div>
+</body>
+</html>

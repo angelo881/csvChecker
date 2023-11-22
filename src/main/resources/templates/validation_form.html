@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Validate African Phone Number</title>
+</head>
+<body>
+<div align="center">
+    <h1>Validate African Phone Number</h1>
+    <form action="#" th:action="@{/validateNumberWeb}" method="post" th:object="${african_number}">
+        <label>Phone Number:</label>
+        <input type="text" th:field="*{number}" /><br/>
+ 
+        <br/>
+ 
+        <button type="submit">Verify</button>    
+    </form>
+</div>
+</body>
+</html>
