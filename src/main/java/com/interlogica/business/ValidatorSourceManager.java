@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -16,7 +15,6 @@ import javax.validation.ValidatorFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -84,7 +82,7 @@ public class ValidatorSourceManager {
 				String new_number = PREFIX + number.substring(PREFIX.length(),LENGTH);
 				if (validateNumber(new_number)) {
 					result.setNumber(new_number);
-					result.setNote(new StringBuffer().append("number ").append(number).append("corrected in ")
+					result.setNote(new StringBuffer().append("number ").append(number).append(" corrected in ")
 							.append(new_number).toString());
 					result.setNumberResult(PhoneNumberResult.CORRECTED);
 				}

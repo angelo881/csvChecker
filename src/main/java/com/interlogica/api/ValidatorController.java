@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,8 +22,8 @@ public class ValidatorController {
 	private ValidatorSourceManager service;
 
 	@PostMapping("/validateNumber")
-	ResponseEntity<RowResult> validateNumber(@RequestBody String number) {
-		return ResponseEntity.ok(service.validate(UUID.randomUUID().toString(), number));
+	ResponseEntity<RowResult> validateNumber(@RequestParam String phone_number) {
+		return ResponseEntity.ok(service.validate(UUID.randomUUID().toString(), phone_number));
 	}
 
 	@PostMapping("/consumeFile")

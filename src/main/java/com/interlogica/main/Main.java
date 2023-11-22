@@ -7,14 +7,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-@EnableWebMvc
 @EnableJpaRepositories("com.interlogica.repository")
 @ComponentScan({ "com.interlogica.api", "com.interlogica.business" })
 @EntityScan("com.interlogica.data")
-public class Main {
+public class Main implements WebMvcConfigurer{
 
 	static Logger logger = LoggerFactory.getLogger(Main.class);
 
